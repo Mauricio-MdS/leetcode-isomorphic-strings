@@ -3,15 +3,22 @@ import java.util.Map;
 
 class Solution {
     public boolean isIsomorphic(String s, String t) {
-        Map<Character, Character> characterMap = new HashMap<>();
+
+        Map<Character, Character> sToT = new HashMap<>();
+        Map<Character, Character> tToS = new HashMap<>();
+
         for (int i = 0; i < s.length(); i++) {
-            Character c = characterMap.get(s.charAt(i));
+            char sChar = s.charAt(i);
+            char tChar = t.charAt(i);
+            Character c = sToT.get(sChar);
 
             if (c == null) {
-                if (characterMap.containsValue(t.charAt(i))) return false;
+                if (tToS.containsKey(tChar)) return false;
 
-                characterMap.put(s.charAt(i), t.charAt(i));
-            } else if (c != t.charAt(i)) return false;
+                sToT.put(sChar, tChar);
+                tToS.put(tChar, sChar);
+            } else if (c != tChar) return false;
+
         }
         return true;
     }
